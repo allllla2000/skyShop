@@ -1,56 +1,36 @@
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.product.SimpleProduct;
 
 public class App {
     public static void main(String[] args) {
 
-        Product product1 = new Product("iPhone", 1000);
-        Product product2 = new Product("macBook", 1500);
-        Product product3 = new Product("watch", 800);
-        Product product4 = new Product("tvScreen", 900);
-        Product product5 = new Product("box", 10);
-        Product product6 = new Product("glasses", 3500);
+        Product product1 = new DiscountedProduct("Milk", 100, 10);
+        Product product2 = new DiscountedProduct("Cheese", 300, 15);
+        Product product3 = new FixPriceProduct("Bread");
+        Product product4 = new FixPriceProduct("Water");
+        Product product5 = new SimpleProduct("Apple", 100);
+        Product product6 = new SimpleProduct("Flour", 200);
 
 
         ProductBasket basket = new ProductBasket();
-
         //Добавление продукта в корзину
-//        basket.addProduct(product4);
-//        basket.addProduct(product5);
-
-//        //Добавление продукта в заполненную корзину, в которой нет свободного места
-        basket.addProduct(product1);
-        basket.addProduct(product2);
-        basket.addProduct(product3);
-        basket.addProduct(product4);
         basket.addProduct(product5);
-        basket.addProduct(product6);
-//
-//        //Печать содержимого корзины с несколькими товарами
+        basket.addProduct(product1);
+        basket.addProduct(product3);
+
+        //Считаем общую стоимость корзины
+        //System.out.println(basket.getTotalCost());
+
+        //Печатаем содержимое корзины в новом формате
         basket.printBasket();
-//
-//        //Получение стоимости корзины с несколькими товарами
-        System.out.println(basket.getTotalCost());
-//
-//        //Поиск товара, который есть в корзине
-        System.out.println(basket.checkProduct("iPhone"));
-//
-//        //Поиск товара, которого нет в корзине
-        System.out.println(basket.checkProduct("car"));
-//
-//        //Очистка корзины
+
+        //Проверяем метод checkProduct
+        System.out.println(basket.checkProduct("Milk"));
+        System.out.println(basket.checkProduct("Doughnut"));
+
         basket.deleteBasket();
-//
-//        //Печать содержимого пустой корзины
-        basket.printBasket();
-//
-//        //Получение стоимости пустой корзины
-        System.out.println(basket.getTotalCost());
-//
-//        //Поиск товара по имени в пустой корзине
-        System.out.println(basket.checkProduct("box"));
-
-
-
     }
 }
