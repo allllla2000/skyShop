@@ -1,36 +1,37 @@
-import org.skypro.skyshop.product.DiscountedProduct;
-import org.skypro.skyshop.product.FixPriceProduct;
-import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.*;
 import org.skypro.skyshop.basket.ProductBasket;
-import org.skypro.skyshop.product.SimpleProduct;
+
+import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
 
-        Product product1 = new DiscountedProduct("Milk", 100, 10);
-        Product product2 = new DiscountedProduct("Cheese", 300, 15);
-        Product product3 = new FixPriceProduct("Bread");
-        Product product4 = new FixPriceProduct("Water");
-        Product product5 = new SimpleProduct("Apple", 100);
-        Product product6 = new SimpleProduct("Flour", 200);
+        SearchEngine searchEngine = new SearchEngine(10);
+
+        searchEngine.add(new DiscountedProduct("Яблоки", 200, 10));
+        searchEngine.add(new FixPriceProduct("Мука"));
+        searchEngine.add(new SimpleProduct("Сахар", 150));
+
+        searchEngine.add(new Article("Что приготовить из яблок", "Шарлотка "
+                + "Яблоки в карамели и другая выпечка - рецепты тут"));
+        searchEngine.add(new Article("Мука и глютен, вред и польза", "Исследования  "
+                + " ученых по поводу вреда и пользы глютена, или это миф"));
+        searchEngine.add(new Article("Сахар: как правильно выбрать", "Статья с советами "
+                + " экспертов, как выбрать сахар"));
 
 
-        ProductBasket basket = new ProductBasket();
-        //Добавление продукта в корзину
-        basket.addProduct(product5);
-        basket.addProduct(product1);
-        basket.addProduct(product3);
+        //ищем по строке "Яблоки"
+        Searchable[] results1 = searchEngine.search("Яблоки");
+        System.out.println(Arrays.toString(results1));
 
-        //Считаем общую стоимость корзины
-        //System.out.println(basket.getTotalCost());
+        //ищем по строке "Мука"
+        Searchable[] results2 = searchEngine.search("Мука");
+        System.out.println(Arrays.toString(results2));
 
-        //Печатаем содержимое корзины в новом формате
-        basket.printBasket();
+        //ищем по строке "Сахар"
+        Searchable[] results3 = searchEngine.search("Сахар");
+        System.out.println(Arrays.toString(results3));
 
-        //Проверяем метод checkProduct
-        System.out.println(basket.checkProduct("Milk"));
-        System.out.println(basket.checkProduct("Doughnut"));
 
-        basket.deleteBasket();
     }
 }
