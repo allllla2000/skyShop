@@ -1,55 +1,36 @@
-import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.*;
 import org.skypro.skyshop.basket.ProductBasket;
+
+import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
 
-        Product product1 = new Product("iPhone", 1000);
-        Product product2 = new Product("macBook", 1500);
-        Product product3 = new Product("watch", 800);
-        Product product4 = new Product("tvScreen", 900);
-        Product product5 = new Product("box", 10);
-        Product product6 = new Product("glasses", 3500);
+        SearchEngine searchEngine = new SearchEngine(10);
+
+        searchEngine.add(new DiscountedProduct("Яблоки", 200, 10));
+        searchEngine.add(new FixPriceProduct("Мука"));
+        searchEngine.add(new SimpleProduct("Сахар", 150));
+
+        searchEngine.add(new Article("Что приготовить из яблок", "Шарлотка "
+                + "Яблоки в карамели и другая выпечка - рецепты тут"));
+        searchEngine.add(new Article("Мука и глютен, вред и польза", "Исследования  "
+                + " ученых по поводу вреда и пользы глютена, или это миф"));
+        searchEngine.add(new Article("Сахар: как правильно выбрать", "Статья с советами "
+                + " экспертов, как выбрать сахар"));
 
 
-        ProductBasket basket = new ProductBasket();
+        //ищем по строке "Яблоки"
+        Searchable[] results1 = searchEngine.search("Яблоки");
+        System.out.println(Arrays.toString(results1));
 
-        //Добавление продукта в корзину
-//        basket.addProduct(product4);
-//        basket.addProduct(product5);
+        //ищем по строке "Мука"
+        Searchable[] results2 = searchEngine.search("Мука");
+        System.out.println(Arrays.toString(results2));
 
-//        //Добавление продукта в заполненную корзину, в которой нет свободного места
-        basket.addProduct(product1);
-        basket.addProduct(product2);
-        basket.addProduct(product3);
-        basket.addProduct(product4);
-        basket.addProduct(product5);
-        basket.addProduct(product6);
-//
-//        //Печать содержимого корзины с несколькими товарами
-        basket.printBasket();
-//
-//        //Получение стоимости корзины с несколькими товарами
-        System.out.println(basket.getTotalCost());
-//
-//        //Поиск товара, который есть в корзине
-        System.out.println(basket.checkProduct("iPhone"));
-//
-//        //Поиск товара, которого нет в корзине
-        System.out.println(basket.checkProduct("car"));
-//
-//        //Очистка корзины
-        basket.deleteBasket();
-//
-//        //Печать содержимого пустой корзины
-        basket.printBasket();
-//
-//        //Получение стоимости пустой корзины
-        System.out.println(basket.getTotalCost());
-//
-//        //Поиск товара по имени в пустой корзине
-        System.out.println(basket.checkProduct("box"));
-
+        //ищем по строке "Сахар"
+        Searchable[] results3 = searchEngine.search("Сахар");
+        System.out.println(Arrays.toString(results3));
 
 
     }

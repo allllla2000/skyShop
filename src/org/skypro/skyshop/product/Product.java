@@ -1,19 +1,43 @@
 package org.skypro.skyshop.product;
 
-public class Product {
-    private String name;
-    private int value;
+public abstract class Product implements Searchable {
+    //В классе товаров нужно имплементировать интерфейс
+    //Searchable
+    //и в качестве
+    //search term
+    // — «возвращать имя товара», а в качестве типа — возвращать строку PRODUCT.
 
-    public Product(String name, int value) {
+    private String name;
+
+    public Product(String name) {
         this.name = name;
-        this.value = value;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getValue() {
-        return value;
+    public abstract int getValue();
+
+    public boolean isSpecial() {
+        return false;
     }
+
+    @Override
+    public String getSearchTerm() {
+        return name;
+    }
+
+    @Override
+    public String getContentType() {
+        return "PRODUCT";
+    }
+
+    @Override
+    public String getObjName() {
+        return name;
+    }
+
+
 }
+
