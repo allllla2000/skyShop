@@ -1,36 +1,69 @@
+import org.skypro.skyshop.article.Article;
+import org.skypro.skyshop.exceptions.BestResultNotFound;
 import org.skypro.skyshop.product.*;
-import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
 
+        try {
+            Product product1 = new SimpleProduct("iPhone", -1000);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Product product2 = new SimpleProduct("sugar", 0);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Product product3 = new DiscountedProduct("dyson", 850, 101);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Product product4 = new DiscountedProduct("chocolate", -10, 5);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+
         SearchEngine searchEngine = new SearchEngine(10);
 
-        searchEngine.add(new DiscountedProduct("Яблоки", 200, 10));
-        searchEngine.add(new FixPriceProduct("Мука"));
-        searchEngine.add(new SimpleProduct("Сахар", 150));
+        Searchable obj1 = new Article("Какая модель iPhone вам подойдет", "Текст статьи " +
+                " про модели iPhone");
+        Searchable obj2 = new Article("Осенние пироги", "Рецепты пирогов, куда входят " +
+                "яблоки и сливы");
 
-        searchEngine.add(new Article("Что приготовить из яблок", "Шарлотка "
-                + "Яблоки в карамели и другая выпечка - рецепты тут"));
-        searchEngine.add(new Article("Мука и глютен, вред и польза", "Исследования  "
-                + " ученых по поводу вреда и пользы глютена, или это миф"));
-        searchEngine.add(new Article("Сахар: как правильно выбрать", "Статья с советами "
-                + " экспертов, как выбрать сахар"));
+        searchEngine.add(obj1);
+        searchEngine.add(obj2);
 
+        try {
+            Searchable bestMatch = searchEngine.findBestMatch("Рецепты");
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
 
-        //ищем по строке "Яблоки"
-        Searchable[] results1 = searchEngine.search("Яблоки");
-        System.out.println(Arrays.toString(results1));
+        try {
+            Searchable bestMatch = searchEngine.findBestMatch("модель");
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
 
-        //ищем по строке "Мука"
-        Searchable[] results2 = searchEngine.search("Мука");
-        System.out.println(Arrays.toString(results2));
+        try {
+            Searchable bestMatch = searchEngine.findBestMatch("Samsung");
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
 
-        //ищем по строке "Сахар"
-        Searchable[] results3 = searchEngine.search("Сахар");
-        System.out.println(Arrays.toString(results3));
+        try {
+            Searchable bestMatch = searchEngine.findBestMatch("шоколад");
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
 
 
     }

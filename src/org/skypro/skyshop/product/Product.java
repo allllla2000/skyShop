@@ -1,17 +1,18 @@
 package org.skypro.skyshop.product;
 
+import org.skypro.skyshop.search.Searchable;
+
 public abstract class Product implements Searchable {
-    //В классе товаров нужно имплементировать интерфейс
-    //Searchable
-    //и в качестве
-    //search term
-    // — «возвращать имя товара», а в качестве типа — возвращать строку PRODUCT.
 
     private String name;
 
     public Product(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Название продукта не может быть пустой строкой");
+        }
         this.name = name;
     }
+
 
     public String getName() {
         return name;
