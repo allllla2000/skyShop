@@ -36,7 +36,7 @@ public class App {
         Searchable obj1 = new Article("Какая модель iPhone вам подойдет", "Текст статьи " +
                 " про модели iPhone");
         Searchable obj2 = new Article("Осенние пироги", "Рецепты пирогов, куда входят " +
-                "яблоки и сливы");
+                "яблоки и сливы ");
 
         searchEngine.add(obj1);
         searchEngine.add(obj2);
