@@ -1,13 +1,77 @@
 import org.skypro.skyshop.article.Article;
+import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.exceptions.BestResultNotFound;
 import org.skypro.skyshop.product.*;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
+
+        Product apple = new SimpleProduct("яблоко", 120);
+        Product chocolate = new SimpleProduct("шоколад", 400);
+        Product chocolate2 = new DiscountedProduct("шоколад", 290, 10);
+        Product sugar = new FixPriceProduct("сахар");
+
+        ProductBasket basket = new ProductBasket();
+
+        basket.addProduct(apple);
+        basket.addProduct(chocolate2);
+        basket.addProduct(chocolate);
+        basket.addProduct(sugar);
+
+        List<Product> deleted = basket.deleteNameBasket("шоколад");
+
+        if (deleted.isEmpty()) {
+            System.out.println("Список пуст");
+        } else {
+            System.out.println("Удаленные продукты: ");
+            for (Product product : deleted) {
+                System.out.println(product);
+            }
+        }
+
+
+        System.out.println("Вывести содержимое корзины");
+        basket.printBasket();
+
+
+
+        List<Product> deletedNonEx = basket.deleteNameBasket("пирог");
+        if (deletedNonEx.isEmpty()) {
+            System.out.println("Такого продукта нет в корзине");
+        }
+
+        basket.printBasket();
+
+
+
+
+        SearchEngine searchEngine = new SearchEngine();
+
+        Searchable obj1 = new Article("Какая модель iPhone вам подойдет", "Текст статьи " +
+                " про модели iPhone");
+        Searchable obj2 = new Article("Осенние пироги", "Рецепты пирогов, куда входят " +
+                "яблоки и сливы ");
+
+        searchEngine.add(obj1);
+        searchEngine.add(obj2);
+
+        String query = "яблоки";
+        List<Searchable> results = searchEngine.search(query);
+
+        if (results.isEmpty()) {
+            System.out.println("По запросу ничего не нашлось");
+        } else {
+            System.out.println("Найденные результаты: ");
+        } for (Searchable result : results) {
+            System.out.println(result.getSearchTerm());
+        }
+
 
         try {
             Product product1 = new SimpleProduct("iPhone", -1000);
@@ -31,15 +95,7 @@ public class App {
         }
 
 
-        SearchEngine searchEngine = new SearchEngine(10);
 
-        Searchable obj1 = new Article("Какая модель iPhone вам подойдет", "Текст статьи " +
-                " про модели iPhone");
-        Searchable obj2 = new Article("Осенние пироги", "Рецепты пирогов, куда входят " +
-                "яблоки и сливы ");
-
-        searchEngine.add(obj1);
-        searchEngine.add(obj2);
 
         try {
             Searchable bestMatch = searchEngine.findBestMatch("Рецепты");
