@@ -8,6 +8,7 @@ import org.skypro.skyshop.search.Searchable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) {
@@ -24,7 +25,7 @@ public class App {
         basket.addProduct(chocolate);
         basket.addProduct(sugar);
 
-        List<Product> deleted = basket.deleteNameBasket("шоколад");
+        List<Product> deleted = basket.deleteNameBasket(" ");
 
         if (deleted.isEmpty()) {
             System.out.println("Список пуст");
@@ -40,15 +41,12 @@ public class App {
         basket.printBasket();
 
 
-
         List<Product> deletedNonEx = basket.deleteNameBasket("пирог");
         if (deletedNonEx.isEmpty()) {
             System.out.println("Такого продукта нет в корзине");
         }
 
         basket.printBasket();
-
-
 
 
         SearchEngine searchEngine = new SearchEngine();
@@ -62,14 +60,15 @@ public class App {
         searchEngine.add(obj2);
 
         String query = "яблоки";
-        List<Searchable> results = searchEngine.search(query);
+        Map<String, Searchable> results = searchEngine.search(query);
 
         if (results.isEmpty()) {
             System.out.println("По запросу ничего не нашлось");
         } else {
             System.out.println("Найденные результаты: ");
-        } for (Searchable result : results) {
-            System.out.println(result.getSearchTerm());
+            for (Map.Entry<String, Searchable> entry : results.entrySet()) {
+                System.out.println("Название: " + entry.getKey() + ", Содержимое: " + entry.getValue().getSearchTerm());
+            }
         }
 
 
