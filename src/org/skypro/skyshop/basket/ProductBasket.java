@@ -8,15 +8,9 @@ public class ProductBasket {
 
     private Map<String, ArrayList<Product>> products = new HashMap<>();
 
-    public void addProduct(Product product) {
-        String key = product.getName();
-        ArrayList<Product> productList = products.get(key);
-        if (productList == null) {
-            productList = new ArrayList<>();
-            products.put(key, productList);
-        }
 
-        productList.add(product);
+    public void addProduct(Product product) {
+        products.computeIfAbsent(product.getName(), k -> new ArrayList<>()).add(product);
     }
 
     public int getTotalCost() {
@@ -66,7 +60,8 @@ public class ProductBasket {
     }
 
     public List<Product> deleteNameBasket(String name) {
-        return products.remove(name) != null ? products.remove(name) : new ArrayList<>();
+        List<Product> removedProducts = products.remove(name);
+        return removedProducts != null ? removedProducts : new ArrayList<>();
     }
 
 
