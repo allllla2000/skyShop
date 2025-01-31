@@ -5,10 +5,7 @@ import org.skypro.skyshop.product.*;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class App {
     public static void main(String[] args) {
@@ -51,23 +48,37 @@ public class App {
 
         SearchEngine searchEngine = new SearchEngine();
 
-        Searchable obj1 = new Article("Какая модель iPhone вам подойдет", "Текст статьи " +
-                " про модели iPhone");
-        Searchable obj2 = new Article("Осенние пироги", "Рецепты пирогов, куда входят " +
-                "яблоки и сливы ");
+        Searchable obj1 = new Article("iPhone или Samsung?", "Сравнение моделей");
+        Searchable obj2 = new Article("Осенние пироги", "Рецепты с яблоками");
+        Searchable obj3 = new Article("Топ-5 рецептов пирогов из яблок", "Длинный текст статьи");
+        Searchable obj4 = new Article("iPhone 16: стоит ли покупать?", "Обзор новинки");
+        Searchable obj5 = new Article("Яблоко — лучший фрукт?", "Еда и здоровье");
+        Searchable obj6 = new Article("Летние десерты", "Рецепты летних десертов");
+
 
         searchEngine.add(obj1);
         searchEngine.add(obj2);
+        searchEngine.add(obj3);
+        searchEngine.add(obj4);
+        searchEngine.add(obj5);
+        searchEngine.add(obj6);
 
-        String query = "яблоки";
-        Map<String, Searchable> results = searchEngine.search(query);
+
+        String query = "";
+        Set<Searchable> results = searchEngine.search(query);
+
+
+        System.out.println("Результаты поиска (от самой длинной статьи к самой короткой):");
+        for (Searchable searchable : results) {
+            System.out.println("Название: " + searchable.getObjName());
+        }
 
         if (results.isEmpty()) {
             System.out.println("По запросу ничего не нашлось");
         } else {
             System.out.println("Найденные результаты: ");
-            for (Map.Entry<String, Searchable> entry : results.entrySet()) {
-                System.out.println("Название: " + entry.getKey() + ", Содержимое: " + entry.getValue().getSearchTerm());
+            for (Searchable searchable : results) {
+                System.out.println("Название: " + searchable.getObjName() + ", Содержимое: " + searchable.getSearchTerm());
             }
         }
 
@@ -92,8 +103,6 @@ public class App {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-
-
 
 
         try {
