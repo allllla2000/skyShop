@@ -2,14 +2,13 @@ package org.skypro.skyshop.search;
 
 public interface Searchable {
 
+
     String getSearchTerm();
 
-    String getContentType();
+    String getSearchContentType();
 
-    String getObjName();
-
-    // Метод преобразования Searchable-объекта в строку
     default String getStringRepresentation() {
-        return getObjName() + " — " + getContentType();
+        return this.getClass().getSimpleName() + "-" + getSearchContentType();
+
     }
 }

@@ -70,7 +70,7 @@ public class App {
 
         System.out.println("Результаты поиска (от самой длинной статьи к самой короткой):");
         for (Searchable searchable : results) {
-            System.out.println("Название: " + searchable.getObjName());
+            System.out.println("Название: " + searchable.getSearchTerm());
         }
 
         if (results.isEmpty()) {
@@ -78,7 +78,7 @@ public class App {
         } else {
             System.out.println("Найденные результаты: ");
             for (Searchable searchable : results) {
-                System.out.println("Название: " + searchable.getObjName() + ", Содержимое: " + searchable.getSearchTerm());
+                System.out.println("Название: " + searchable.getSearchTerm() + ", Содержимое: " + searchable.getSearchTerm());
             }
         }
 

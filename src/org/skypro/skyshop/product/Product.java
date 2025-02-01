@@ -32,18 +32,9 @@ public abstract class Product implements Searchable {
     }
 
     @Override
-    public String getContentType() {
+    public String getSearchContentType() {
         return "PRODUCT";
     }
-
-    @Override
-    public String getObjName() {
-        return name;
-    }
-
-    //Реализуйте в классе статей и в классе продуктов методы equals и hashCode,
-    //которые учитывают только имя статьи или продукта
-
 
     @Override
     public boolean equals(Object o) {

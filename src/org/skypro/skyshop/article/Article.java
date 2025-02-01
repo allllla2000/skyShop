@@ -20,17 +20,12 @@ public final class Article implements Searchable {
 
     @Override
     public String getSearchTerm() {
-        return toString();
-    }
-
-    @Override
-    public String getContentType() {
-        return "ARTICLE";
-    }
-
-    @Override
-    public String getObjName() {
         return articleName;
+    }
+
+    @Override
+    public String getSearchContentType() {
+        return "ARTICLE";
     }
 
 
