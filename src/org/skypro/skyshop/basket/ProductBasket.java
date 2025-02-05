@@ -4,23 +4,21 @@ import java.util.*;
 
 import org.skypro.skyshop.product.Product;
 
+import java.util.stream.Collectors;
+
 public class ProductBasket {
 
     private Map<String, ArrayList<Product>> products = new HashMap<>();
-
 
     public void addProduct(Product product) {
         products.computeIfAbsent(product.getName(), k -> new ArrayList<>()).add(product);
     }
 
     public int getTotalCost() {
-        int total = 0;
-        for (ArrayList<Product> productGroup : products.values()) {
-            for (Product currentProduct : productGroup) {
-                total += currentProduct.getValue();
-            }
-        }
-        return total;
+        return products.values().stream()
+                .flatMap(Collection::stream)
+                .mapToInt(Product::getValue)
+                .sum();
     }
 
     public void printBasket() {
@@ -29,27 +27,25 @@ public class ProductBasket {
             return;
         }
 
-        int totalCost = 0;
-        int specialCount = 0;
+        products.forEach((name, productList) -> {
+            System.out.println("Товар: " + name + ", количество: " + productList.size());
+            productList.forEach(System.out::println);
+        });
 
-        for (Map.Entry<String, ArrayList<Product>> entry : products.entrySet()) {
-            String productName = entry.getKey();
-            ArrayList<Product> productList = entry.getValue();
-
-            System.out.println("Товар: " + productName + ", количество: " + productList.size());
-            for (Product product : productList) {
-                System.out.println("  " + product);
-                totalCost += product.getValue();
-                if (product.isSpecial()) {
-                    specialCount++;
-                }
-            }
-        }
-
+        int totalCost = products.values().stream()
+                .flatMap(Collection::stream)
+                .mapToInt(Product::getValue)
+                .sum();
         System.out.println("Итого: " + totalCost);
-        System.out.println("Специальных товаров: " + specialCount);
     }
 
+    private void getSpecialCount() {
+        long specialCount = products.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
+        System.out.println("Специальных товаров " + specialCount);
+    }
 
     public boolean checkProduct(String name) {
         return products.containsKey(name);
